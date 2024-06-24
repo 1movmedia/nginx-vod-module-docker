@@ -2,10 +2,12 @@ FROM alpine:latest AS base_image
 
 FROM base_image AS build
 
-RUN apk add --no-cache curl build-base openssl openssl-dev zlib-dev linux-headers pcre-dev ffmpeg ffmpeg-dev
-
 ARG NGINX_VERSION=1.27.0
 ARG VOD_MODULE_VERSION=1.33
+ARG NGINX_CONFIG=""
+ARG NGINX_DEPS=""
+
+RUN apk add --no-cache curl build-base openssl openssl-dev zlib-dev linux-headers pcre-dev ffmpeg ffmpeg-dev ${NGINX_DEPS}
 
 RUN mkdir nginx \
  && curl -sL https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz | tar -C /nginx --strip 1 -xz
@@ -19,7 +21,8 @@ RUN ./configure --prefix=/usr/local/nginx \
 	--with-http_ssl_module \
 	--with-file-aio \
 	--with-threads \
-	--with-cc-opt="-O3"
+	--with-cc-opt="-O3" \
+	${NGINX_CONFIG}
 RUN make
 RUN make install
 RUN rm -rf /usr/local/nginx/html /usr/local/nginx/conf/*.default
