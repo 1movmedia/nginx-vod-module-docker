@@ -10,7 +10,7 @@ steps:
   - name: test-dockerfile
     image: plugins/docker
     settings:
-      repo: nytimes/nginx-vod-module
+      repo: 1movmedia/nginx-vod-module
       dry_run: true
     when:
       event: pull_request
@@ -18,7 +18,7 @@ steps:
   - name: build-and-push-to-dockerhub
     image: plugins/docker
     settings:
-      repo: nytimes/nginx-vod-module
+      repo: 1movmedia/nginx-vod-module
       auto_tag: true
       username:
         from_secret: docker_username
