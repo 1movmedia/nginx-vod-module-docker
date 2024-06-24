@@ -21,7 +21,15 @@ docker build --build-arg NGINX_DEPS_RUNTIME="geoip" --build-arg NGINX_DEPS="geoi
 
 Running locally
 ---------------
+You can run example locally with Docker
+
 ```
 # Run
-docker run --rm -p 8765:80 -v .:/usr/local/nginx/html -v ./nginx.conf:/usr/local/nginx/conf/nginx.conf 1movmedia/nginx-vod-module:custom
+docker run --rm -p 3030:80 -v ./examples/videos:/opt/static/videos -v ./examples/nginx.conf:/usr/local/nginx/conf/nginx.conf 1movmedia/nginx-vod-module:custom
 ```
+
+After running this command, you should be able to play the following URLs:
+
+- HLS: http://localhost:3030/hls/devito,360p.mp4,480p.mp4,720p.mp4,.en_US.vtt,.urlset/master.m3u8
+- Dash: http://localhost:3030/dash/devito,360p.mp4,480p.mp4,720p.mp4,.en_US.vtt,.urlset/manifest.mpd
+- Thumbnail: http://localhost:3030/thumb/devito360p.mp4/thumb-1000.jpg
